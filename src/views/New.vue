@@ -5,31 +5,55 @@
     </div>
     <form class="item-form">
       <span style="font-size: 18px;">Nome: </span><input placeholder="Nome do seu item..."
-      class="input-style" type="text" name="fname">
+      class="input-style" type="text" name="fname" v-model="wItem.name">
       <br>
       <br>
       <span style="font-size: 18px;">Tipo: </span><br>
-      <input type="radio" name="type" value="S"> S
-      <input type="radio" name="type" value="H"> H
-      <input type="radio" name="type" value="I"> I
+      <input type="radio" name="type" value="S" v-model="wItem.type"> S
+      <input type="radio" name="type" value="H" v-model="wItem.type"> H
+      <input type="radio" name="type" value="I" v-model="wItem.type"> I
       <br>
       <br>
       <span style="font-size: 18px;">Descricao: </span><input placeholder="Descricao do seu item..."
-      class="input-style" type="text" name="fdesc"><br><br>
+      class="input-style" type="text" name="fdesc" v-model="wItem.desc"><br><br>
       <span style="font-size: 18px;">Qtd: </span><input placeholder="Quantidade do seu item..."
-      class="input-style" type="text" name="fqtd"><br>
+      class="input-style" type="number" name="fqtd" v-model="wItem.qtd"><br>
       <div style="text-align: center; margin-top: 10px;">
         <b>Eventos</b>
       </div>
       <br>
       <span style="font-size: 18px;">Data 1: </span><input placeholder="Data Inicial do Item..."
-      class="input-style" type="date" name="fd1"><br>
+      class="input-style" type="date" name="fd1" v-model="wItem.d1"><br>
       <span style="font-size: 18px;">Data 2: </span><input placeholder="Data Início(F) do Item..."
-      class="input-style" type="date" name="fd2"><br>
-      <input type="button" value="Salvar" class="save-btn">
+      class="input-style" type="date" name="fd2" v-model="wItem.d2"><br>
+      <div class="save-btn" @click="save">Salvar</div>
     </form>
   </div>
 </template>
+
+<script>
+export default {
+  name: 'new',
+  data() {
+    return {
+      wItem: {
+        name: '',
+        type: 'H',
+        desc: '',
+        qtd: 1,
+        d1: null,
+        d2: null,
+      },
+    };
+  },
+  methods: {
+    save() {
+      this.$store.dispatch('add', this.wItem);
+      this.$router.push({ name: 'home' });
+    },
+  },
+};
+</script>
 
 <style lang="scss" scoped>
 .item-form {
@@ -58,5 +82,8 @@
   border-radius: 3px;
   position: fixed;
   bottom: 20px;
+  text-align: center;
+  padding-top: 15px;
+  cursor: pointer;
 }
 </style>
